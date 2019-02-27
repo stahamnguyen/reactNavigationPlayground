@@ -167,14 +167,14 @@ const hideTabBar = (callback?: () => void): void => {
       tabBarTranslateY,
       {
         toValue: -100,
-        duration: 100,
+        duration: 250,
       }
     ),
     Animated.timing(
       tabBarHeight,
       {
         toValue: 0,
-        duration: 100,
+        duration: 250,
       }
     ),
   ]).start(callback);
@@ -185,7 +185,7 @@ const showTabBar = (callback?: () => void): void => {
     Animated.timing(
       tabBarTranslateY,
       {
-        toValue: 20,
+        toValue: 30,
         duration: 250,
       }
     ),

@@ -51,14 +51,19 @@ class TemplateScreen extends Component<Props, State> {
 
     if (label === deep1) {
       this.props.navigation.goBack();
-      this.props.showTabBar();
+      setTimeout(this.showTabBar, 50);
     } else {
-      this.props.hideTabBar(this.navigateBack);
+      setTimeout(this.navigateTo, 100);
+      this.props.hideTabBar();
     }
   }
 
-  private navigateBack = (): void => {
+  private navigateTo = (): void => {
     this.props.navigation.navigate(deep1);
+  }
+
+  private showTabBar = (): void => {
+    this.props.showTabBar();
   }
 }
 
