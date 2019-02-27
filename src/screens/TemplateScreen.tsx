@@ -8,10 +8,12 @@ import { getRandomColor } from 'helpers/Generators';
 const { deep1 } = NavigationRoutes;
 
 interface Props {
+  hideTabBar?: (callback?: () => void) => void;
+  navigation?: any;
   screenProps?: {
     label: string;
   };
-  navigation?: any;
+  showTabBar?: (callback?: () => void) => void;
 }
 
 interface State {}
@@ -43,7 +45,21 @@ class TemplateScreen extends Component<Props, State> {
   }
 
   private onPress = (): void => {
-    this.props.navigation.navigate(deep1);
+    const {
+      screenProps: { label },
+    } = this.props;
+
+    if (label === deep1) {
+      this.props.navigation.goBack();
+      this.props.showTabBar();
+      /* this.props.showTabBar(() => {
+        this.props.navigation.goBack();
+      }); */
+    } else {
+      this.props.hideTabBar(() => {
+        this.props.navigation.navigate(deep1);
+      });
+    }
   }
 }
 

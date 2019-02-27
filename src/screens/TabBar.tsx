@@ -36,6 +36,7 @@ const createTabs = (): Object => {
     const tabBar = {
       [id]: ({ navigation }) => (
         <TemplateScreen
+          hideTabBar={hideTabBar}
           key={id}
           navigation={navigation}
           screenProps={{label}}
@@ -49,6 +50,7 @@ const createTabs = (): Object => {
           key={id}
           navigation={navigation}
           screenProps={{ label: deep1 }}
+          showTabBar={showTabBar}
         />
       ),
       [deep2]: ({ navigation }) => (
@@ -88,16 +90,25 @@ const getLabel = (item: TabMetadata): Object => ({
   tabBarLabel: ({ focused }) => {
 
     return (
-      <SafeAreaView style={[styles.tab, globalStyles.center]}>
-        <Text
-          style={[
-            styles.tabLabel,
-            { color: focused ? '#FAB' : 'black' },
-          ]}
-        >
-          {item.label}
-        </Text>
-      </SafeAreaView>
+      <Animated.View
+        style={{
+          height: tabBarHeight,
+          transform: [
+            { translateY: tabBarTranslateY },
+          ],
+        }}
+      >
+        <SafeAreaView style={[styles.tab, globalStyles.center]}>
+          <Text
+            style={[
+              styles.tabLabel,
+              { color: focused ? '#FAB' : 'black' },
+            ]}
+          >
+            {item.label}
+          </Text>
+        </SafeAreaView>
+      </Animated.View>
     );
   },
 
@@ -149,6 +160,47 @@ const TabBar = createMaterialTopTabNavigator(createTabs(), {
     },
   },
 });
+
+const hideTabBar = (callback?: () => void): void => {
+  Animated.parallel([
+    Animated.timing(
+      tabBarTranslateY,
+      {
+        toValue: -100,
+        duration: 500,
+      }
+    ),
+    Animated.timing(
+      tabBarHeight,
+      {
+        toValue: 0,
+        duration: 500,
+      }
+    ),
+  ]).start(callback);
+};
+
+const showTabBar = (callback?: () => void): void => {
+  Animated.parallel([
+    Animated.timing(
+      tabBarTranslateY,
+      {
+        toValue: 20,
+        duration: 500,
+      }
+    ),
+    Animated.timing(
+      tabBarHeight,
+      {
+        toValue: 100,
+        duration: 500,
+      }
+    ),
+  ]).start(callback);
+};
+
+const tabBarTranslateY = new Animated.Value(0);
+const tabBarHeight = new Animated.Value(100);
 
 const styles = StyleSheet.create({
   tab: {
