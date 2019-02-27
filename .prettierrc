@@ -1,5 +1,7 @@
 {
   "semi": true,
   "singleQuote": true,
-  "trailingComma": "es5"
+  "trailingComma": "all",
+  "eslintIntegration": true,
+  "space-in-brackets": ["always"]
 }

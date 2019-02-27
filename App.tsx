@@ -1,28 +1,14 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
-type Props = {};
+import NavigationRoutes from 'config/NavigationRoutes';
+import TabBar from 'screens/TabBar';
 
-class App extends Component<Props> {
-  render() {
-    return (
-      <View style={[styles.container, styles.center]}>
-        <Text>hello</Text>
-        <Text>To get started, edit App.js</Text>
-      </View>
-    );
-  }
-}
+const { home } = NavigationRoutes;
 
-const styles = StyleSheet.create({
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
+const App = createStackNavigator({
+  [home]: TabBar,
+}, {
+  headerMode: 'none',
 });
 
-export default App;
+export default createAppContainer(App);
